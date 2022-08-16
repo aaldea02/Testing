@@ -1,4 +1,4 @@
-import { draggableList, create_UUID } from "./dragdrop.js";
+import { draggableList, create_UUID, drop } from "./dragdrop.js";
 
 export const insertNode = (node) => {
   let sel, range;
@@ -216,19 +216,52 @@ document.addEventListener("DOMContentLoaded", () => {
       );
   };
 
+  const addSpan = () => {
+    const spaceSpan = document.createElement("span");
+
+    // this doesnt work?
+    if (spaceSpan === document.activeElement) {
+      setTimeout(function () {
+        div1.focus();
+      }, 0);
+      addSpan();
+    }
+    spaceSpan.innerText += " ";
+  
+    spaceSpan.setAttribute("class", "newSpan");
+    spaceSpan.addEventListener("drop", drop);
+
+    insertNode(spaceSpan);
+    div1.setAttribute("contentEditable", false);
+    spaceSpan.setAttribute("contentEditable", true);
+
+    setTimeout(() => {
+      spaceSpan.focus();
+    }, 0);
+
+    setTimeout(function () {
+      div1.focus();
+    }, 0);
+
+    placeIbeamAfterNode(spaceSpan);
+    div1.setAttribute("contentEditable", true);
+    spaceSpan.setAttribute("contentEditable", false);
+  };
   const checkKeyPressedDiv = (evt) => {
+    // YOU HAVE TO BE TYPING INSIDE THE RED
     if (div1 === document.activeElement) {
       if (evt.key === "@") {
         createInput(evt);
-      } else if (evt.which === 32 ) {
-       // evt.preventDefault();
-        const spaceSpan = document.createElement("span");
-        spaceSpan.setAttribute("class", "words");
-        insertNode(spaceSpan);
+      } else if (evt.which === 32) {
+        // need to make sure its
+        //evt.preventDefault();
        
+        addSpan();
       }
     }
   };
 
   div1.addEventListener("keydown", (e) => checkKeyPressedDiv(e), false);
+
+  //add controlZ
 });
