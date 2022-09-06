@@ -43,44 +43,47 @@ export const draggableList = [
     content: "Patient Name",
   },
 ];
-document.addEventListener("DOMContentLoaded", () => {
+
   // ]gets the input div
-  const div1 = document.getElementById("div1");
-  div1.setAttribute("contentEditable", true);
-
-  let b = document.createDocumentFragment();
-  let c = false;
-  // creates draggables
-  for (let x = 0; x < draggableList.length; x++) {
-    const d = document.createElement("span");
-    d.setAttribute("class", "draggables");
-    d.setAttribute("id", draggableList[x].id);
-
-    d.innerText = draggableList[x].content;
-    d.setAttribute("contentEditable", false);
-    d.setAttribute("draggable", true);
-    b.appendChild(d);
-  }
-  div1.after(b); // attaches draggables
-
-  // event listeners for drag drop
-  document.addEventListener("dragover", (ev) => {
-    ev.preventDefault();
-  });
-
-  document.addEventListener("dragstart", (ev) => {
-    ev.dataTransfer.setData("text", ev.target.id);
-  });
-
-  // specifies event listener to div1
-  div1.addEventListener("drop", drop);
-
-  // another weird error, trying to add spans in the middle of spaces
-  // div1.innerHTML = div1.innerText.replace(
-  //   /(^|<\/?[^>]+>|\s+)([^\s<]+)/g,
-  //   '$1<span class="words">$2</span><span class="words"> </span>'
-  // );
-  div1.innerHTML = div1.innerText.replace(/\s/g, '<span class="words"> </span>');
-
+ export const dragDrop = () => {
+    const div1 = document.getElementById("div1");
+    div1.setAttribute("contentEditable", true);
   
-});
+    let b = document.createDocumentFragment();
+    let c = false;
+    // creates draggables
+    for (let x = 0; x < draggableList.length; x++) {
+      const d = document.createElement("span");
+      d.setAttribute("class", "draggables");
+      d.setAttribute("id", draggableList[x].id);
+  
+      d.innerText = draggableList[x].content;
+      d.setAttribute("contentEditable", false);
+      d.setAttribute("draggable", true);
+      b.appendChild(d);
+    }
+    div1.after(b); // attaches draggables
+  
+    // event listeners for drag drop
+    document.addEventListener("dragover", (ev) => {
+      ev.preventDefault();
+    });
+  
+    document.addEventListener("dragstart", (ev) => {
+      ev.dataTransfer.setData("text", ev.target.id);
+    });
+  
+    // specifies event listener to div1
+    div1.addEventListener("drop", drop);
+  
+    // another weird error, trying to add spans in the middle of spaces
+    // div1.innerHTML = div1.innerText.replace(
+    //   /(^|<\/?[^>]+>|\s+)([^\s<]+)/g,
+    //   '$1<span class="words">$2</span><span class="words"> </span>'
+    // );
+    div1.innerHTML = div1.innerText.replace(/\s/g, '<span class="words"> </span>');
+  
+    
+  };
+  
+

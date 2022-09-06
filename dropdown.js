@@ -1,4 +1,4 @@
-import { draggableList, create_UUID, drop } from "./dragdrop.js";
+import { draggableList, create_UUID, dragDrop, drop } from "./dragdrop.js";
 
 export const insertNode = (node) => {
   let sel, range;
@@ -20,6 +20,8 @@ export const insertNode = (node) => {
   }
 };
 document.addEventListener("DOMContentLoaded", () => {
+  const dropDown = () => {
+    dragDrop();
   const div1 = document.getElementById("div1");
   let choice = -1;
 
@@ -218,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const addSpan = () => {
     const spaceSpan = document.createElement("span");
-
+    console.log ("mami");
     // this doesnt work?
     if (spaceSpan === document.activeElement) {
       setTimeout(function () {
@@ -226,9 +228,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 0);
       addSpan();
     }
-    spaceSpan.innerText += " ";
+    spaceSpan.innerText += "\t";
   
-    spaceSpan.setAttribute("class", "newSpan");
+    spaceSpan.setAttribute("class", "words");
     spaceSpan.addEventListener("drop", drop);
 
     insertNode(spaceSpan);
@@ -262,6 +264,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   div1.addEventListener("keydown", (e) => checkKeyPressedDiv(e), false);
+
+  };
+  dropDown();
+  
 
   //add controlZ
 });
